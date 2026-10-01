@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Icono - El Laboratorio del Profe Matus</title>
+    <style>
+        body {
+            background-color: #0d1b2a;
+            color: #e0fbfc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        canvas {
+            border: 4px solid #00f5d4;
+            border-radius: 40px;
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.6);
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #00f5d4;
+            color: #0d1b2a;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .btn:hover {
+            background-color: #00c4ab;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Lienzo de 512x512 optimizado para tiendas de apps y accesos directos -->
+    <canvas id="iconCanvas" width="512" height="512"></canvas>
+    <button class="btn" onclick="descargarIconoLab()">Descargar Icono de Laboratorio (512x512)</button>
+
+    <script>
+        const canvas = document.getElementById('iconCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 1. Fondo con degradado tecnológico oscuro profundo
+        const bgGradient = ctx.createRadialGradient(256, 256, 50, 256, 256, 300);
+        bgGradient.addColorStop(0, '#1b263b');
+        bgGradient.addColorStop(1, '#0d1b2a');
+        ctx.fillStyle = bgGradient;
+        ctx.fillRect(0, 0, 512, 512);
+
+        // 2. Trazado de pistas de circuito cibernéticas de fondo
+        ctx.strokeStyle = 'rgba(0, 245, 212, 0.2)';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        // Pistas horizontales y verticales
+        ctx.moveTo(100, 150); ctx.lineTo(220, 150); ctx.lineTo(256, 180);
+        ctx.moveTo(412, 150); ctx.lineTo(320, 150); ctx.lineTo(256, 180);
+        ctx.moveTo(100, 360); ctx.lineTo(200, 360); ctx.lineTo(256, 320);
+        ctx.moveTo(412, 360); ctx.lineTo(310, 360); ctx.lineTo(256, 320);
+        ctx.stroke();
+
+        // Nodos de circuito (puntos brilhantes)
+        [[100, 150], [412, 150], [100, 360], [412, 360], [256, 180], [256, 320]].forEach(([x, y]) => {
+            ctx.fillStyle = '#00f5d4';
+            ctx.beginPath();
+            ctx.arc(x, y, 6, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // 3. Microcontrolador / Chip Central Neón
+        ctx.fillStyle = '#0d1b2a';
+        ctx.strokeStyle = '#00f5d4';
+        ctx.lineWidth = 8;
+        ctx.shadowColor = '#00f5d4';
+        ctx.shadowBlur = 15;
+        ctx.fillRect(176, 176, 160, 160);
+        ctx.strokeRect(176, 176, 160, 160);
+
+        // Pines del chip
+        ctx.fillStyle = '#ff0055';
+        for(let i = 0; i < 4; i++) {
+            let offset = 210 + (i * 30);
+            // Izquierda y derecha
+            ctx.fillRect(160, offset, 16, 8);
+            ctx.fillRect(336, offset, 16, 8);
+            // Arriba y abajo
+            ctx.fillRect(offset, 160, 8, 16);
+            ctx.fillRect(offset, 336, 8, 16);
+        }
+
+        // 4. Símbolo central de Laboratorio / Rayo Eléctrico ⚡
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#ffcc00';
+        ctx.font = 'bold 90px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('⚡', 256, 256);
+
+        // Resetear sombra para los textos
+        ctx.shadowBlur = 0;
+
+        // 5. Textos decorativos institucionales
+        ctx.fillStyle = '#e0fbfc';
+        ctx.font = 'bold 24px "Segoe UI", sans-serif';
+        ctx.fillText('LABORATORIO', 256, 85);
+
+        ctx.fillStyle = '#00f5d4';
+        ctx.font = 'bold 36px "Segoe UI", sans-serif';
+        ctx.shadowColor = 'rgba(0, 245, 212, 0.5)';
+        ctx.shadowBlur = 10;
+        ctx.fillText('PROFE MATUS', 256, 435);
+
+        function descargarIconoLab() {
+            const link = document.createElement('a');
+            link.download = 'icon-lab-profe-matus-512x512.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
